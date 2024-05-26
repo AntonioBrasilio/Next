@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import classes from './page.module.css';
-import { ImageSlideshow } from '@/components/main-header/images/image-slideshow';
+import { ImageSlideshow } from '@/components/images/image-slideshow';
 
 export default function Home() {
     return (
         <>
-            <heade className={classes.header}>
+            <header className={classes.header}>
                 <div className={classes.slideshow}>
                     <ImageSlideshow />
                 </div>
@@ -19,7 +19,7 @@ export default function Home() {
                         <Link href="/meals">Explore Meals</Link>
                     </div>
                 </div>
-            </heade>
+            </header>
             <main>
                 <section className={classes.section}>
                     <h2>How it works</h2>
