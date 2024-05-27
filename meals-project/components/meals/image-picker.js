@@ -1,17 +1,44 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import classes from './image-picker.module.css';
+import Image from 'next/image';
 
 export const ImagePicker = ({ label, name }) => {
+    const [fileState, setFileState] = useState();
     const inputRef = useRef();
     const handlePickClick = () => {
         inputRef.current.click();
+    };
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+
+        if (!file) {
+            return;
+        }
+
+        const fileReader = new FileReader();
+        fileReader.onload = () => {
+            setFileState(fileReader.result);
+        };
+
+        fileReader.readAsDataURL(file);
     };
     return (
         <div className={classes.picker}>
             <label htmlFor={name}>{label}</label>
             <div className={classes.controls}>
+                <div className={classes.preview}>
+                    {!fileState && <p>No image chosen.</p>}
+                    {fileState && (
+                        <Image
+                            src={fileState}
+                            alt="Preview"
+                            fill
+                        />
+                    )}
+                </div>
                 <input
                     className={classes.input}
                     type="file"
@@ -19,6 +46,7 @@ export const ImagePicker = ({ label, name }) => {
                     accept="image/png, image/jpeg"
                     name={name}
                     ref={inputRef}
+                    onChange={handleFileChange}
                 />
                 <button
                     className={classes.button}
