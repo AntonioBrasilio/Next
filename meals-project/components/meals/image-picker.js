@@ -15,6 +15,7 @@ export const ImagePicker = ({ label, name }) => {
         const file = event.target.files[0];
 
         if (!file) {
+            setFileState(null);
             return;
         }
 
@@ -47,6 +48,7 @@ export const ImagePicker = ({ label, name }) => {
                     name={name}
                     ref={inputRef}
                     onChange={handleFileChange}
+                    required
                 />
                 <button
                     className={classes.button}
