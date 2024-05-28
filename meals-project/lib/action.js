@@ -3,9 +3,9 @@
 import { redirect } from 'next/navigation';
 import { saveMeal } from './meals';
 
-const isInvalidText = (text) => !text || text.trim() === '';
+const isInvalidText = (text) => !text || text === '';
 
-export const submitShare = async (formData) => {
+export const submitShare = async (prevState, formData) => {
     const meal = {
         title: formData.get('title'),
         summary: formData.get('summary'),
@@ -23,8 +23,9 @@ export const submitShare = async (formData) => {
         isInvalidText(meal.creator) ||
         isInvalidText(meal.creator_email || !meal.creator_email.includes('@') || !meal.image || meal.image.size === 0)
     ) {
-        alert('Please fill out all fields.');
-        return;
+        return {
+            message: 'Please fill out all fields.',
+        };
     }
 
     await saveMeal(meal);
